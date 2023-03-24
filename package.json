@@ -1,7 +1,11 @@
 {
   "name": "cssroot-2-liquid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tool to convert CSS variables to Shopify Liquid section settings",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EcomGraduates/cssroot-2-liquid.git"
+  },
   "main": "index.js",
   "bin": {
     "cssroot-2-liquid": "./index.js"
@@ -10,5 +14,5 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "EcomGraduates LLC",
-  "license": "ISC"
+  "license": "MIT"
 }
