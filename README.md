@@ -1,2 +1,2 @@
 # cssroot-2-liquid
-an easy way to convert css root to shopify sections
+A tool to convert CSS variables to Shopify Liquid section settings
