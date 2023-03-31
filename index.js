@@ -22,6 +22,10 @@ async function main() {
       return `--${name}: ${value};`;
     }
 
+    if (value.match(/^url\(['"]?([^'"]+)['"]?\)$/)) {
+      return `--${name}: url({{ section.settings.${name} }});`;
+    }
+
     return `--${name}: {{ section.settings.${name} }};`;
   }).join('\n')}
 }
@@ -45,6 +49,9 @@ ${variables.map((variable) => {
     if (value.match(/\d+,\s?\d+,\s?\d+/)) {
       defaultValue = rgbToHex(value);
     }
+  } else if (value.match(/^url\(['"]?([^'"]+)['"]?\)$/)) {
+    settingType = 'image_picker';
+    defaultValue = value.match(/^url\(['"]?([^'"]+)['"]?\)$/)[1];
   } else {
     settingType = 'text';
   }
@@ -52,11 +59,12 @@ ${variables.map((variable) => {
   const label = name.replace(/[-_\/\d]/g, ' ').replace(/\w+/g, (word) => word.charAt(0).toUpperCase() + word.slice(1)).trim();
 
   return `    {
-      "type": "${settingType}",
-      "id": "${name}",
-      "label": "${label}",
-      "default": "${defaultValue}"
-    }`;
+    "type": "${settingType}",
+    "id": "${name}",
+    "label": "${label}"${settingType === 'image_picker' ? '' : `,
+    "default": "${defaultValue}"`}
+  }`;
+  
 }).filter((setting) => setting !== null).join(',\n')}
   ]
 }
@@ -78,3 +86,5 @@ main().catch((error) => {
   console.error('Error:', error.message);
   process.exit(1);
 });
+
+
